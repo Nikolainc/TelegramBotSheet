@@ -2,7 +2,10 @@ from telegram import Update, Message
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 from bot_commands import help_command, get_command, add_command, del_command, getall_command, start_command
 
-app = ApplicationBuilder().token("5670502593:AAHToD7GA3dMoySLZIM0wNo8ar85jZkOojg").build()
+with open("token.txt", 'r') as file:
+    token = file.read()
+
+app = ApplicationBuilder().token(token).build()
 print("server start")
 
 app.add_handler(CommandHandler("help", help_command))
