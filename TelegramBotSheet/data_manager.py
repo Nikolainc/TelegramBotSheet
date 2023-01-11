@@ -10,6 +10,17 @@ def AddToSheetData(msg, user):
     data.append((str(result[1]), " ".join(result[2:])))
     WriteSheetData(user, data)
 
+def DelFromSheetData(msg, user):
+    result = msg.split()
+    data = CreateDataView(user, start = datetime.strptime("01.01.1970","%d.%m.%Y"))
+    new_data = []
+    for i in range(len(data)):
+        if i == int(result[1]):
+            continue
+        else:
+            new_data.append(data[i])
+    WriteSheetData(user, new_data)
+
 def CreateDataView(user, start):
     data = ReadSheetData(user)
     new_data = []
@@ -32,6 +43,7 @@ def SelectDataByTime(data, start):
 def GetMessageForSend(data):
     msg = f'Расписание сформировано в {datetime.now().strftime("%d.%m.%y %H:%M:%S")}\n\n'
     for i in range(len(data)):
+        msg += f'Запись N{i}\n'
         msg += str(data[i][0]) + '\n'
         msg += str(data[i][1]) + '\n\n'
     return msg

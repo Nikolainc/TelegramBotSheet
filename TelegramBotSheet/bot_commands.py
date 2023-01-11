@@ -1,6 +1,6 @@
 import datetime
 from spy import logging
-from data_manager import GetSheetData, AddToSheetData
+from data_manager import GetSheetData, AddToSheetData, DelFromSheetData
 from data_provider import WriteSheetData
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
@@ -33,6 +33,7 @@ async def add_command(update: Update, context: ContextTypes):
     logging(datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"), update.effective_user.first_name + str(update.effective_user.id), update.message.text, result_msg)
 
 async def del_command(update: Update, context: ContextTypes):
-    result_msg = f''
+    DelFromSheetData(update.message.text, update.effective_user.id)
+    result_msg = f'Deleted'
     await update.message.reply_text(result_msg)
     logging(datetime.datetime.now().strftime("%d-%m-%Y %H:%M:%S"), update.effective_user.first_name + str(update.effective_user.id), update.message.text, result_msg)
